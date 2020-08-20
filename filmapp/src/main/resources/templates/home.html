@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Home</title>
+</head>
+
+<body>
+<section>
+    <form th:action="@{/find}">
+        <table>
+            <tr>
+                <td>Movie:</td>
+                <td><input type="text" th:name="title" /></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</section>
+
+<section>
+    <form th:action="@{/findActor}">
+        <table>
+            <tr>
+                <td>Actor:</td>
+                <td><input type="text" th:name="actor" /></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</section>
+
+<section>
+    <div class="container">
+        <table class="table-content">
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Title</th>
+                <th>Plot</th>
+                <th>Actors</th>
+                <th>Genre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="movie : ${movies}">
+                <td th:text="${movie.getRank()}"></td>
+                <td th:text="${movie.title}"></td>
+                <td th:text="${movie.plot}"></td>
+                <div>
+                    <td th:each = "crew : ${movie.getCrews()}"
+                        th:if="${crew.getRole().getRoleName() == 'Stars'}"
+                        th:text="${crew.getPerson().getName()}">
+                    </td>
+                </div>
+                <div>
+                    <td th:each = "genre : ${movie.getGenres()}"
+                        th:text="${genre.getName()}">
+                    </td>
+                </div>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+
+</html>
